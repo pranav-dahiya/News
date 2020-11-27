@@ -1,0 +1,62 @@
+\begin{thebibliography}{10}
+
+\bibitem{berman20}
+Ron Berman and Zsolt Katona.
+\newblock Curation algorithms and filter bubbles in social networks.
+\newblock {\em Marketing Science}, 39(2):296--316, 2020.
+
+\bibitem{blei03}
+David~M. Blei, Andrew~Y. Ng, and Michael~I. Jordan.
+\newblock Latent dirichlet allocation.
+\newblock {\em J. Mach. Learn. Res.}, 3(null):993–1022, March 2003.
+
+\bibitem{calzada20}
+Joan Calzada and Ricard Gil.
+\newblock What do news aggregators do? evidence from google news in spain and
+  germany.
+\newblock {\em Marketing Science}, 39(1):134--167, 2020.
+
+\bibitem{claussens19}
+J{\"o}rg Claussen, Christian Peukert, and Ananya Sen.
+\newblock The editor vs. the algorithm: Targeting, data and externalities in
+  online news.
+\newblock {\em Data and Externalities in Online News (June 5, 2019)}, 2019.
+
+\bibitem{fischer20}
+Sean Fischer, Kokil Jaidka, and Yphtach Lelkes.
+\newblock Auditing local news presence on google news.
+\newblock {\em Nature Human Behaviour}, pages 1--9, 2020.
+
+\bibitem{hu19}
+Lin Hu, Anqi Li, and Ilya Segal.
+\newblock The politics of personalized news aggregation.
+\newblock Technical report, Working Paper, 2019.
+
+\bibitem{doh-shin16}
+Doh-Shin Jeon and Nikrooz Nasr.
+\newblock News aggregators and competition among newspapers on the internet.
+\newblock {\em American Economic Journal: Microeconomics}, 8(4):91--114,
+  November 2016.
+
+\bibitem{antonis19}
+Antonis Kalogeropoulos, Richard Fletcher, and Rasmus~Kleis Nielsen.
+\newblock News brand attribution in distributed environments: Do people know
+  where they get their news?
+\newblock {\em New Media \& Society}, 21(3):583--601, 2019.
+
+\bibitem{le14}
+Quoc~V. Le and Tomas Mikolov.
+\newblock Distributed representations of sentences and documents, 2014.
+
+\bibitem{ling20}
+Rich Ling.
+\newblock Confirmation bias in the era of mobile news consumption: The social
+  and psychological dimensions.
+\newblock {\em Digital Journalism}, 8(5):596--604, 2020.
+
+\bibitem{Vosoughi18}
+Soroush Vosoughi, Deb Roy, and Sinan Aral.
+\newblock The spread of true and false news online.
+\newblock {\em Science}, 359(6380):1146--1151, 2018.
+
+\end{thebibliography}

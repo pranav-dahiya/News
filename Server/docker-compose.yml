@@ -1,0 +1,37 @@
+version: "2.4"
+
+services:
+  db:
+    image: mysql
+    volumes:
+      - mysql-data:/var/lib/mysql
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: r00t_mysql
+      MYSQL_DATABASE: article_clustering
+      MYSQL_USER: user
+      MYSQL_PASSWORD: u53r_mysql
+
+  adminer:
+    image: adminer
+    ports:
+      - 8080:8080
+
+  app:
+    image: pranavdahiya/graph-tool:latest
+    volumes:
+      - jupyter-data:/home/user/.jupyter
+      - ./Code:/home/user/work
+    ports:
+      - 8890:8888
+      
+  api:
+    build: .
+    ports:
+      - 5000:5000
+
+volumes:
+  mysql-data:
+  jupyter-data:
+    external: true
