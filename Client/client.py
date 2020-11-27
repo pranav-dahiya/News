@@ -13,7 +13,7 @@ from gi.repository import Gtk, Gio, WebKit2
 class Window(Gtk.Window):
       def __init__(self):
             Gtk.Window.__init__(self)
-            self.set_default_size(800, 800)
+            self.set_default_size(1920, 1080)
 
             hb = Gtk.HeaderBar()
             hb.set_show_close_button(True)
@@ -94,25 +94,28 @@ class Window(Gtk.Window):
             self.show_all()
              
       def _load_articles(self, button):
-            print('load articles from category', self.category_dict[button])
+            category_id = self.category_dict[button]
+            article_ids = [int(val) for val in self.categories.at[category_id, 'article_ids'].split(',')]
+            response = requests.get('http://localhost:5000/articles', params={'article_ids': json.dumps(article_ids)})
+            articles = pd.read_json(response.text, orient='split')
+            
             self._clear_container(self.articles_view)
             
             # get list of articles from api 
-            articles = range(100)
             self.articles_dict = dict()
-            for i in articles:
+            for i, row in articles.iterrows():
                   button_box = Gtk.Box()
                   image_view = WebKit2.WebView()
-                  image_view.load_uri('https://image.cnbcfm.com/api/v1/image/106577930-1592223377872gettyimages-1169040174.jpeg?v=1592223431')
-                  image_view.set_size_request(100, 50)
+                  image_view.load_uri(row.top_image)
+                  image_view.set_size_request(400, 200)
                   button_box.pack_start(image_view, False, False, 0)
-                  button_box.pack_start(Gtk.Label(label='Title of article ' + str(i)), True, True, 0)
-                  button_box.pack_end(Gtk.Label(label='25/11/2020'), False, False, 0)
+                  button_box.pack_start(Gtk.Label(label=row.title), True, True, 0)
+                  button_box.pack_end(Gtk.Label(label=str(row.date)), False, False, 0)
                   button = Gtk.Button()
                   button.add(button_box)
                   self.articles_view.pack_start(button, False, False, 0)
                   button.connect('clicked', self._load_article_url)
-                  self.articles_dict[button] = i
+                  self.articles_dict[button] = row.url
             
             self._clear_container(self.scrolled_window)
             self.scrolled_window.add(self.articles_view)
@@ -120,9 +123,7 @@ class Window(Gtk.Window):
             self.show_all()
             
       def _load_article_url(self, button):
-            url = self.articles_dict[button]
-            print('article', url)
-            self.web_view.load_uri('https://cnn.com')            
+            self.web_view.load_uri(self.articles_dict[button])            
             self.remove(self.scrolled_window)   
             self.add(self.web_view)
             self.web_view.set_visible(True)
