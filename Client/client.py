@@ -1,5 +1,8 @@
 import requests
+import pandas as pd
 import gi
+import json
+from wordcloud import WordCloud
 
 gi.require_version('Gtk', '3.0')
 gi.require_version('WebKit2', '4.0')
@@ -45,18 +48,28 @@ class Window(Gtk.Window):
             for widget in container.get_children():
                   widget.set_visible(False)
                   container.remove(widget)
+                  
+      def _wordcloud_gen(self, row):
+            freq = {key: val for key, val in json.loads(row.wordcloud)}
+            wc = WordCloud().generate_from_frequencies(freq)
+            wc.to_file('data/' + str(row.id) + '.jpg')
             
       def _load_categories(self, button):
-            print('load categories from api')
-            
+            response = requests.get('http://localhost:5000/categories', params={'source_urls': json.dumps(sources)})
+            self.categories = pd.read_json(response.text, orient='split')
+            self.categories['id'] = self.categories.index
+            self.categories[['id', 'wordcloud']].apply(self._wordcloud_gen, axis=1)            
+
             # get categories 
             self._clear_container(self.categories_view)
-            categories = range(100)
             self.category_dict = dict()
-            for i, button in enumerate(map(lambda i: Gtk.Button.new_with_label(str(i)), categories)):
+            for i, row in self.categories.iterrows():
+                  image = Gtk.Image.new_from_file('data/' + str(i) + '.jpg')
+                  button = Gtk.Button()
+                  button.add(image)
+                  self.category_dict[button] = i
                   self.categories_view.attach(button, i%5, int(i/5), 1, 1)
                   button.connect('clicked', self._load_articles)
-                  self.category_dict[button] = i
                   
             if self.web_view in self.get_children():
                   self.remove(self.web_view)
@@ -114,6 +127,10 @@ class Window(Gtk.Window):
             self.add(self.web_view)
             self.web_view.set_visible(True)
             self.show_all()
+            
+
+with open('sources.json') as f:
+      sources = json.load(f)
       
 win = Window()
 win.connect("destroy", Gtk.main_quit)
