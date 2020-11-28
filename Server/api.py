@@ -3,8 +3,6 @@ import pandas as pd
 from sqlalchemy import create_engine
 from flask import Flask
 from flask import request
-from sqlalchemy import create_engine
-
 
 app = Flask(__name__)
 engine = create_engine('mysql+mysqlconnector://user:u53r_mysql@db/article_clustering')

@@ -98,10 +98,10 @@ class Window(Gtk.Window):
             article_ids = [int(val) for val in self.categories.at[category_id, 'article_ids'].split(',')]
             response = requests.get('http://localhost:5000/articles', params={'article_ids': json.dumps(article_ids)})
             articles = pd.read_json(response.text, orient='split')
+            articles.sort_values(by='date', ascending=False, inplace=True)
             
             self._clear_container(self.articles_view)
             
-            # get list of articles from api 
             self.articles_dict = dict()
             for i, row in articles.iterrows():
                   button_box = Gtk.Box()
